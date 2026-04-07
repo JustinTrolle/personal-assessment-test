@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USA Triathlon · Level 2 Personal Knowledge Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #002A5C;
+    --navy-light: #0a3d7a;
+    --navy-pale:  #d6e0ee;
+    --red:        #C32033;
+    --red-light:  #e8303f;
+    --white:      #ffffff;
+    --off-white:  #f4f6fa;
+    --yellow:     #FFF2CC;
+    --yellow-mid: #FFD966;
+    --gray-50:    #f8f9fc;
+    --gray-100:   #edf0f7;
+    --gray-200:   #d4d9e8;
+    --gray-500:   #6b7280;
+    --gray-700:   #374151;
+    --text:       #1a2340;
+    --radius:     6px;
+    --shadow:     0 2px 12px rgba(0,42,92,0.10);
+    --shadow-lg:  0 8px 32px rgba(0,42,92,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HERO HEADER ── */
+  .hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.025) 40px,
+        rgba(255,255,255,0.025) 41px
+      );
+  }
+  .hero-inner {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-accent {
+    width: 8px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .hero-content {
+    padding: 40px 48px 40px 36px;
+    flex: 1;
+  }
+  .hero-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-top: 10px;
+  }
+  .hero-badge {
+    align-self: center;
+    margin-left: auto;
+    padding-left: 36px;
+    padding-right: 48px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .badge-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 6px;
+  }
+  .badge-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .badge-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  /* ── RED DIVIDER BAR ── */
+  .divider-bar {
+    background: var(--red);
+    padding: 10px 0;
+    text-align: center;
+  }
+  .divider-bar p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── COACH INFO CARD ── */
+  .info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--navy);
+    padding: 32px 36px;
+    margin-bottom: 32px;
+  }
+  .card-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gray-200);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .field label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(0,42,92,0.08);
+  }
+
+  /* ── SECTION BLOCKS ── */
+  .section-block {
+    margin-bottom: 28px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .section-header {
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-header.navy  { background: var(--navy); }
+  .section-header.red   { background: var(--red); }
+  .section-header.gold  { background: var(--yellow-mid); }
+  .section-header-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-header-text h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.2;
+  }
+  .section-header.navy  .section-header-text h2,
+  .section-header.red   .section-header-text h2 { color: var(--white); }
+  .section-header.gold  .section-header-text h2 { color: var(--navy); }
+
+  .section-header-text p {
+    font-size: 11.5px;
+    margin-top: 2px;
+    font-style: italic;
+  }
+  .section-header.navy  .section-header-text p { color: rgba(255,255,255,0.65); }
+  .section-header.red   .section-header-text p { color: rgba(255,255,255,0.65); }
+  .section-header.gold  .section-header-text p { color: var(--navy); opacity: 0.7; }
+
+  /* ── MODULE ROWS ── */
+  .module-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 200px;
+    align-items: start;
+    gap: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-100);
+    transition: background 0.1s;
+  }
+  .module-row:last-child { border-bottom: none; }
+  .module-row:nth-child(even) { background: var(--gray-50); }
+  .module-row.gold-row { background: var(--yellow); }
+  .module-row.gold-row:nth-child(even) { background: #fffbe6; }
+
+  .row-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-500);
+    align-self: stretch;
+    border-right: 1px solid var(--gray-100);
+  }
+  .module-row.gold-row .row-num {
+    color: var(--navy);
+    border-right-color: rgba(195,160,0,0.2);
+  }
+
+  .row-content {
+    padding: 14px 18px 14px 20px;
+  }
+  .row-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .module-row.gold-row .row-label { color: var(--navy); }
+
+  /* Rating pills */
+  .rating-group {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .rating-group input[type="radio"] { display: none; }
+  .rating-group label {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-200);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: 'Oswald', sans-serif;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .rating-group label:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+    background: var(--navy-pale);
+  }
+  .rating-group input[type="radio"]:checked + label {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  /* Red for high scores */
+  .rating-group input[type="radio"][value="9"]:checked + label,
+  .rating-group input[type="radio"][value="10"]:checked + label {
+    background: var(--red);
+    border-color: var(--red);
+  }
+  /* Gold for key areas */
+  .gold-row .rating-group input[type="radio"]:checked + label {
+    background: #b8860b;
+    border-color: #b8860b;
+  }
+
+  /* Notes column */
+  .row-notes {
+    padding: 14px 18px 14px 12px;
+    border-left: 1px solid var(--gray-100);
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .module-row.gold-row .row-notes {
+    border-left-color: rgba(195,160,0,0.2);
+  }
+  .row-notes label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray-500);
+    margin-bottom: 5px;
+    display: block;
+  }
+  .row-notes textarea {
+    width: 100%;
+    flex: 1;
+    min-height: 54px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    resize: vertical;
+    outline: none;
+    background: rgba(255,255,255,0.7);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .row-notes textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 2px rgba(0,42,92,0.07);
+  }
+  .module-row.gold-row .row-notes textarea:focus {
+    border-color: #b8860b;
+    box-shadow: 0 0 0 2px rgba(184,134,11,0.1);
+  }
+
+  /* ── COLUMN LABELS ROW ── */
+  .col-labels {
+    display: grid;
+    grid-template-columns: 48px 1fr 200px;
+    background: var(--gray-100);
+    border-bottom: 2px solid var(--gray-200);
+  }
+  .col-label {
+    padding: 8px 0;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+  }
+  .col-label:first-child { text-align: center; }
+  .col-label:nth-child(2) { padding-left: 20px; }
+  .col-label:nth-child(3) { padding-left: 12px; border-left: 1px solid var(--gray-200); }
+
+  /* ── SUBMIT SECTION ── */
+  .submit-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--red);
+    padding: 32px 36px;
+    margin-top: 32px;
+    text-align: center;
+  }
+  .submit-section h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .submit-section p {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .submit-btn {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 14px 48px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(195,32,51,0.3);
+  }
+  .submit-btn:hover {
+    background: var(--red-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(195,32,51,0.38);
+  }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled {
+    background: var(--gray-500);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ── SUCCESS / ERROR STATE ── */
+  .alert {
+    display: none;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+  .alert.success {
+    background: #d1fae5;
+    border: 1.5px solid #34d399;
+    color: #065f46;
+  }
+  .alert.error {
+    background: #fee2e2;
+    border: 1.5px solid #f87171;
+    color: #991b1b;
+  }
+
+  /* ── SUPP bullet ── */
+  .supp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    display: inline-block;
+    margin-right: 8px;
+    flex-shrink: 0;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 0.5px;
+  }
+  .footer a { color: var(--navy); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .hero-badge { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .module-row { grid-template-columns: 36px 1fr; }
+    .row-notes { display: none; }
+    .col-labels { grid-template-columns: 36px 1fr; }
+    .col-label:nth-child(3) { display: none; }
+    .hero-content { padding: 28px 20px; }
+    .info-card, .submit-section { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-accent"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">USA Triathlon · Coach Certification</div>
+      <div class="hero-title">Level 2<br><span>Personal Knowledge</span><br>Assessment</div>
+      <p class="hero-sub">Rate your current knowledge in each area before the course begins. Your responses are recorded and used to personalize your learning experience.</p>
+    </div>
+    <div class="hero-badge">
+      <div class="badge-circle">
+        <span class="badge-num">L2</span>
+      </div>
+      <div class="badge-label">Pre-Course</div>
+    </div>
+  </div>
+</div>
+<div class="divider-bar">
+  <p>Rate 1 (No Knowledge) → 10 (Expert) &nbsp;·&nbsp; Add any notes or context in the notes column</p>
+</div>
+
+<!-- ── FORM ── -->
+<form id="assessmentForm" novalidate>
+<div class="container">
+
+  <!-- COACH INFO -->
+  <div class="info-card">
+    <div class="card-title">Coach Information</div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Full Name *</label>
+        <input type="text" name="coachName" required placeholder="e.g. Alex Johnson">
+      </div>
+      <div class="field">
+        <label>Email Address *</label>
+        <input type="email" name="email" required placeholder="alex@example.com">
+      </div>
+      <div class="field">
+        <label>USAT Membership #</label>
+        <input type="text" name="memberNumber" placeholder="Optional">
+      </div>
+      <div class="field">
+        <label>Assessment Date</label>
+        <input type="date" name="assessmentDate" id="assessmentDate">
+      </div>
+    </div>
+  </div>
+
+  <!-- CORE MODULES -->
+  <div class="section-block">
+    <div class="section-header navy">
+      <div class="section-header-icon">🎯</div>
+      <div class="section-header-text">
+        <h2>Core Modules</h2>
+        <p>12 required course modules — rate your pre-course knowledge in each</p>
+      </div>
+    </div>
+    <div class="col-labels">
+      <div class="col-label">#</div>
+      <div class="col-label">Module &amp; Pre-Course Rating (1–10)</div>
+      <div class="col-label">Notes</div>
+    </div>
+    <div id="coreModules"></div>
+  </div>
+
+  <!-- KEY LEARNING AREAS -->
+  <div class="section-block">
+    <div class="section-header gold">
+      <div class="section-header-icon">⭐</div>
+      <div class="section-header-text">
+        <h2>Key Learning Areas</h2>
+        <p>Cross-course competency themes — not individual modules, but broader professional capabilities</p>
+      </div>
+    </div>
+    <div class="col-labels" style="background:#fffde7; border-bottom-color:#e0c060;">
+      <div class="col-label">#</div>
+      <div class="col-label">Competency Area &amp; Pre-Course Rating (1–10)</div>
+      <div class="col-label">Notes</div>
+    </div>
+    <div id="keyAreas"></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-section">
+    <h3>Submit Your Assessment</h3>
+    <p>Your responses will be saved securely. A confirmation will appear once your submission is received.<br>
+    All fields marked * are required.</p>
+    <button type="submit" class="submit-btn" id="submitBtn">Submit Assessment</button>
+    <div class="alert success" id="successMsg">
+      ✅ <strong>Assessment submitted successfully!</strong> Your responses have been recorded. Thank you, coach.
+    </div>
+    <div class="alert error" id="errorMsg">
+      ⚠️ <strong>Submission error.</strong> Please check your connection and try again. If the problem persists, contact your education coordinator.
+    </div>
+  </div>
+
+</div>
+</form>
+
+<div class="footer">
+  <a href="https://triathlonlearning.com" target="_blank">triathlonlearning.com</a> &nbsp;·&nbsp; USA Triathlon Level 2 Coach Certification &nbsp;·&nbsp; Education Department
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+//  ▶  CONFIGURATION — paste your Apps Script Web App URL here
+// ─────────────────────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlkDupIR1TtiiBJDH7N-wUaOnTr68dvuCXPGGwOahuUfj_Ltw56YrYGMxiGEetPzB7/exec";
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────────────────────────────────────
+const coreModules = [
+  { id: "m1",  label: "Module 1: Course Introduction" },
+  { id: "m2",  label: "Module 2: Endurance Physiology" },
+  { id: "m3",  label: "Module 3: Performance Periodization" },
+  { id: "m4",  label: "Module 4: Performance Cycling Training" },
+  { id: "m5",  label: "Module 5: Performance Run Training, Racing & Form" },
+  { id: "m6",  label: "Module 6: Advanced Strength Training" },
+  { id: "m7",  label: "Module 7: Performance Nutrition" },
+  { id: "m8",  label: "Module 8: Advanced Swimming" },
+  { id: "m9",  label: "Module 9: Mentoring & Mentorship" },
+  { id: "m10", label: "Module 10: Field-Based Testing & Data Collection" },
+  { id: "m11", label: "Module 11: Developing Training Environments" },
+  { id: "m12", label: "Module 12: Building Mental Resilience in Triathletes" },
+];
+
+
+const keyAreas = [
+  { id: "k1", label: "Sport Specific Knowledge" },
+  { id: "k2", label: "Theoretical Knowledge" },
+  { id: "k3", label: "Pedagogical Understanding" },
+  { id: "k4", label: "Coaching Environment" },
+  { id: "k5", label: "Business of Coaching" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  BUILD ROWS
+// ─────────────────────────────────────────────────────────────────────────────
+function buildRows(items, containerId, isGold = false) {
+  const container = document.getElementById(containerId);
+  items.forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = `module-row${isGold ? ' gold-row' : ''}`;
+
+    // Number
+    const numEl = document.createElement('div');
+    numEl.className = 'row-num';
+    numEl.textContent = isGold ? '★' : (index + 1);
+    row.appendChild(numEl);
+
+    // Content
+    const content = document.createElement('div');
+    content.className = 'row-content';
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'row-label';
+    labelEl.textContent = item.label;
+    content.appendChild(labelEl);
+
+    // Rating pills
+    const ratingGroup = document.createElement('div');
+    ratingGroup.className = 'rating-group';
+    for (let v = 1; v <= 10; v++) {
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = `${item.id}_rating`;
+      radio.id = `${item.id}_r${v}`;
+      radio.value = v;
+      const lbl = document.createElement('label');
+      lbl.setAttribute('for', `${item.id}_r${v}`);
+      lbl.textContent = v;
+      ratingGroup.appendChild(radio);
+      ratingGroup.appendChild(lbl);
+    }
+    content.appendChild(ratingGroup);
+    row.appendChild(content);
+
+    // Notes
+    const notesEl = document.createElement('div');
+    notesEl.className = 'row-notes';
+    const notesLabel = document.createElement('label');
+    notesLabel.setAttribute('for', `${item.id}_notes`);
+    notesLabel.textContent = 'Notes';
+    const textarea = document.createElement('textarea');
+    textarea.id = `${item.id}_notes`;
+    textarea.name = `${item.id}_notes`;
+    textarea.placeholder = 'Optional notes…';
+    notesEl.appendChild(notesLabel);
+    notesEl.appendChild(textarea);
+    row.appendChild(notesEl);
+
+    container.appendChild(row);
+  });
+}
+
+buildRows(coreModules, 'coreModules', false);
+
+buildRows(keyAreas,   'keyAreas',    true);
+
+// Set today's date default
+document.getElementById('assessmentDate').valueAsDate = new Date();
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  COLLECT FORM DATA
+// ─────────────────────────────────────────────────────────────────────────────
+function collectData() {
+  const form = document.getElementById('assessmentForm');
+  const data = {
+    timestamp:      new Date().toISOString(),
+    coachName:      form.coachName.value.trim(),
+    email:          form.email.value.trim(),
+    memberNumber:   form.memberNumber.value.trim(),
+    assessmentDate: form.assessmentDate.value,
+  };
+
+  const allItems = [...coreModules, ...keyAreas];
+  allItems.forEach(item => {
+    const selected = form.querySelector(`input[name="${item.id}_rating"]:checked`);
+    data[`${item.id}_rating`] = selected ? parseInt(selected.value) : "";
+    data[`${item.id}_notes`]  = (form[`${item.id}_notes`]?.value || "").trim();
+  });
+
+  return data;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  SUBMIT
+// ─────────────────────────────────────────────────────────────────────────────
+document.getElementById('assessmentForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const form = this;
+  if (!form.coachName.value.trim() || !form.email.value.trim()) {
+    alert("Please fill in your name and email before submitting.");
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const successMsg = document.getElementById('successMsg');
+  const errorMsg   = document.getElementById('errorMsg');
+
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+  successMsg.style.display = 'none';
+  errorMsg.style.display   = 'none';
+
+  const payload = collectData();
+
+  try {
+    // Google Apps Script requires no-cors mode — response will be opaque but data arrives
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    successMsg.style.display = 'block';
+    btn.textContent = '✓ Submitted';
+    btn.style.background = '#059669';
+    // Scroll to success
+    successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } catch (err) {
+    errorMsg.style.display = 'block';
+    btn.textContent = 'Submit Assessment';
+    btn.disabled = false;
+    console.error('Submission error:', err);
+  }
+});
+</script>
+</body>
+</html>
