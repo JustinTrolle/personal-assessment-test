@@ -749,9 +749,9 @@ function collectData() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  SUBMIT
+//  SUBMIT — uses hidden iframe POST to bypass CORS entirely
 // ─────────────────────────────────────────────────────────────────────────────
-document.getElementById('assessmentForm').addEventListener('submit', async function(e) {
+document.getElementById('assessmentForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
   const form = this;
@@ -771,30 +771,37 @@ document.getElementById('assessmentForm').addEventListener('submit', async funct
 
   const payload = collectData();
 
-  try {
-    // URLSearchParams is required — JSON content-type triggers a preflight blocked by no-cors
-    const formData = new URLSearchParams();
-    Object.entries(payload).forEach(([k, v]) => formData.append(k, v ?? ""));
+  // Build a hidden form and submit it to a hidden iframe — most reliable way
+  // to POST to Google Apps Script without CORS issues
+  const iframe = document.getElementById('hidden_iframe');
+  const hiddenForm = document.getElementById('hidden_form');
 
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode:   'no-cors',
-      body:   formData
-    });
+  // Clear any previous inputs
+  hiddenForm.innerHTML = '';
+  hiddenForm.action = APPS_SCRIPT_URL;
 
+  // Add all payload fields as hidden inputs
+  Object.entries(payload).forEach(([k, v]) => {
+    const input = document.createElement('input');
+    input.type  = 'hidden';
+    input.name  = k;
+    input.value = v ?? '';
+    hiddenForm.appendChild(input);
+  });
+
+  // Listen for iframe load = submission complete
+  iframe.onload = function() {
     successMsg.style.display = 'block';
     btn.textContent = '✓ Submitted';
     btn.style.background = '#059669';
-    // Scroll to success
     successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
 
-  } catch (err) {
-    errorMsg.style.display = 'block';
-    btn.textContent = 'Submit Assessment';
-    btn.disabled = false;
-    console.error('Submission error:', err);
-  }
+  hiddenForm.submit();
 });
 </script>
+<!-- Hidden iframe + form for CORS-free submission to Google Apps Script -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+<form id="hidden_form" method="POST" target="hidden_iframe" style="display:none;"></form>
 </body>
 </html>
