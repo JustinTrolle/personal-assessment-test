@@ -629,7 +629,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 //  ▶  CONFIGURATION — paste your Apps Script Web App URL here
 // ─────────────────────────────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsZqVnuVQgbGrua1qe0wytCzP4JOyvwtupNOSrRxl-yOU_Q0f5EUpxtt4yfDb0f3wf7w/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_5M2Dzcaxy2bvNqj3H_zPhfhrvfvYWBQM5-O5WG4vkdOG8KjLMs77pxnGkDdCpDa9Fw/exec";
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  DATA
@@ -772,12 +772,14 @@ document.getElementById('assessmentForm').addEventListener('submit', async funct
   const payload = collectData();
 
   try {
-    // Google Apps Script requires no-cors mode — response will be opaque but data arrives
+    // URLSearchParams is required — JSON content-type triggers a preflight blocked by no-cors
+    const formData = new URLSearchParams();
+    Object.entries(payload).forEach(([k, v]) => formData.append(k, v ?? ""));
+
     await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode:   'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body:   formData
     });
 
     successMsg.style.display = 'block';
