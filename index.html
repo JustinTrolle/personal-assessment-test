@@ -36,7 +36,6 @@
     min-height: 100vh;
   }
 
-  /* ── HERO HEADER ── */
   .hero {
     background: var(--navy);
     position: relative;
@@ -134,7 +133,6 @@
     font-family: 'Oswald', sans-serif;
   }
 
-  /* ── RED DIVIDER BAR ── */
   .divider-bar {
     background: var(--red);
     padding: 10px 0;
@@ -149,14 +147,12 @@
     font-weight: 400;
   }
 
-  /* ── MAIN LAYOUT ── */
   .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 40px 24px 80px;
   }
 
-  /* ── COACH INFO CARD ── */
   .info-card {
     background: var(--white);
     border-radius: var(--radius);
@@ -215,7 +211,6 @@
     box-shadow: 0 0 0 3px rgba(0,42,92,0.08);
   }
 
-  /* ── SECTION BLOCKS ── */
   .section-block {
     margin-bottom: 28px;
     border-radius: var(--radius);
@@ -256,7 +251,6 @@
   .section-header.red   .section-header-text p { color: rgba(255,255,255,0.65); }
   .section-header.gold  .section-header-text p { color: var(--navy); opacity: 0.7; }
 
-  /* ── MODULE ROWS ── */
   .module-row {
     display: grid;
     grid-template-columns: 48px 1fr 200px;
@@ -296,11 +290,18 @@
     font-weight: 600;
     color: var(--text);
     line-height: 1.4;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
   }
   .module-row.gold-row .row-label { color: var(--navy); }
+  .row-descriptor {
+    font-size: 11.5px;
+    color: var(--gray-500);
+    font-style: italic;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .module-row.gold-row .row-descriptor { color: #7a6800; }
 
-  /* Rating pills */
   .rating-group {
     display: flex;
     gap: 4px;
@@ -334,19 +335,16 @@
     border-color: var(--navy);
     color: var(--white);
   }
-  /* Red for high scores */
   .rating-group input[type="radio"][value="9"]:checked + label,
   .rating-group input[type="radio"][value="10"]:checked + label {
     background: var(--red);
     border-color: var(--red);
   }
-  /* Gold for key areas */
   .gold-row .rating-group input[type="radio"]:checked + label {
     background: #b8860b;
     border-color: #b8860b;
   }
 
-  /* Notes column */
   .row-notes {
     padding: 14px 18px 14px 12px;
     border-left: 1px solid var(--gray-100);
@@ -391,7 +389,6 @@
     box-shadow: 0 0 0 2px rgba(184,134,11,0.1);
   }
 
-  /* ── COLUMN LABELS ROW ── */
   .col-labels {
     display: grid;
     grid-template-columns: 48px 1fr 200px;
@@ -410,7 +407,6 @@
   .col-label:nth-child(2) { padding-left: 20px; }
   .col-label:nth-child(3) { padding-left: 12px; border-left: 1px solid var(--gray-200); }
 
-  /* ── SUBMIT SECTION ── */
   .submit-section {
     background: var(--white);
     border-radius: var(--radius);
@@ -463,7 +459,6 @@
     box-shadow: none;
   }
 
-  /* ── SUCCESS / ERROR STATE ── */
   .alert {
     display: none;
     padding: 16px 20px;
@@ -484,7 +479,6 @@
     color: #991b1b;
   }
 
-  /* ── SUPP bullet ── */
   .supp-dot {
     width: 8px;
     height: 8px;
@@ -498,7 +492,6 @@
     top: -1px;
   }
 
-  /* ── FOOTER ── */
   .footer {
     text-align: center;
     padding: 24px;
@@ -522,7 +515,6 @@
 </head>
 <body>
 
-<!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-accent"></div>
@@ -543,11 +535,9 @@
   <p>Rate 1 (No Knowledge) → 10 (Expert) &nbsp;·&nbsp; Add any notes or context in the notes column</p>
 </div>
 
-<!-- ── FORM ── -->
 <form id="assessmentForm" novalidate>
 <div class="container">
 
-  <!-- COACH INFO -->
   <div class="info-card">
     <div class="card-title">Coach Information</div>
     <div class="form-grid">
@@ -570,7 +560,6 @@
     </div>
   </div>
 
-  <!-- CORE MODULES -->
   <div class="section-block">
     <div class="section-header navy">
       <div class="section-header-icon">🎯</div>
@@ -587,7 +576,6 @@
     <div id="coreModules"></div>
   </div>
 
-  <!-- KEY LEARNING AREAS -->
   <div class="section-block">
     <div class="section-header gold">
       <div class="section-header-icon">⭐</div>
@@ -604,7 +592,6 @@
     <div id="keyAreas"></div>
   </div>
 
-  <!-- SUBMIT -->
   <div class="submit-section">
     <h3>Submit Your Assessment</h3>
     <p>Your responses will be saved securely. A confirmation will appear once your submission is received.<br>
@@ -626,54 +613,59 @@
 </div>
 
 <script>
-// ─────────────────────────────────────────────────────────────────────────────
-//  ▶  CONFIGURATION — paste your Apps Script Web App URL here
-// ─────────────────────────────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_5M2Dzcaxy2bvNqj3H_zPhfhrvfvYWBQM5-O5WG4vkdOG8KjLMs77pxnGkDdCpDa9Fw/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_5M2Dzcaxy2bvNqj3H_zPhfhrvfYWBQM5-O5WG4vkdOG8KjLMs77pxnGkDdCpDa9Fw/exec";
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  DATA
-// ─────────────────────────────────────────────────────────────────────────────
 const coreModules = [
-  { id: "m1",  label: "Module 1: Course Introduction" },
-  { id: "m2",  label: "Module 2: Endurance Physiology" },
-  { id: "m3",  label: "Module 3: Performance Periodization" },
-  { id: "m4",  label: "Module 4: Performance Cycling Training" },
-  { id: "m5",  label: "Module 5: Performance Run Training, Racing & Form" },
-  { id: "m6",  label: "Module 6: Advanced Strength Training" },
-  { id: "m7",  label: "Module 7: Performance Nutrition" },
-  { id: "m8",  label: "Module 8: Advanced Swimming" },
-  { id: "m9",  label: "Module 9: Mentoring & Mentorship" },
-  { id: "m10", label: "Module 10: Field-Based Testing & Data Collection" },
-  { id: "m11", label: "Module 11: Developing Training Environments" },
-  { id: "m12", label: "Module 12: Building Mental Resilience in Triathletes" },
+  { id: "m1",  label: "Module 1: Course Introduction",
+    desc: "How confident do you feel in your coaching abilities coming from Level 1, and how would you rate the expectations you're placing on yourself entering this course?" },
+  { id: "m2",  label: "Module 2: Endurance Physiology",
+    desc: "How well do you understand the physiological systems that drive endurance performance — energy pathways, VO2 max, lactate threshold, and adaptation to training?" },
+  { id: "m3",  label: "Module 3: Performance Periodization",
+    desc: "How confident are you in structuring a multi-phase training plan that peaks an athlete for target events across a full season?" },
+  { id: "m4",  label: "Module 4: Performance Cycling Training",
+    desc: "How well can you prescribe and evaluate cycling-specific training — including power-based programming, pacing strategy, and race-day execution?" },
+  { id: "m5",  label: "Module 5: Performance Run Training, Racing & Form",
+    desc: "How confident are you in coaching run technique, developing run fitness off the bike, and guiding athletes through race-specific run strategy?" },
+  { id: "m6",  label: "Module 6: Advanced Strength Training",
+    desc: "How well do you understand how to integrate periodized strength and conditioning work into a triathlete's program without compromising sport-specific training?" },
+  { id: "m7",  label: "Module 7: Performance Nutrition",
+    desc: "How confident are you in guiding athletes on fueling strategies for training and racing, including daily nutrition habits and race-day carbohydrate management?" },
+  { id: "m8",  label: "Module 8: Advanced Swimming",
+    desc: "How well can you analyze swim technique, design performance swim sets, and help athletes translate pool fitness into open-water race performance?" },
+  { id: "m9",  label: "Module 9: Mentoring & Mentorship",
+    desc: "How confident are you in your ability to give and receive meaningful coaching feedback, and in supporting the development of less experienced coaches?" },
+  { id: "m10", label: "Module 10: Field-Based Testing & Data Collection",
+    desc: "How comfortable are you designing and executing field tests, interpreting the data collected, and using results to adjust an athlete's training prescription?" },
+  { id: "m11", label: "Module 11: Developing Training Environments",
+    desc: "How well do you understand how to create safe, productive, and athlete-centered training environments across different settings and group sizes?" },
+  { id: "m12", label: "Module 12: Building Mental Resilience in Triathletes",
+    desc: "How confident are you in applying mental performance strategies — goal setting, self-talk, arousal control — to help athletes perform under pressure?" },
 ];
-
 
 const keyAreas = [
-  { id: "k1", label: "Sport Specific Knowledge" },
-  { id: "k2", label: "Theoretical Knowledge" },
-  { id: "k3", label: "Pedagogical Understanding" },
-  { id: "k4", label: "Coaching Environment" },
-  { id: "k5", label: "Business of Coaching" },
+  { id: "k1", label: "Sport Specific Knowledge",
+    desc: "How deep is your working knowledge of triathlon across all three disciplines — including rules, race formats, equipment, and discipline-specific training demands?" },
+  { id: "k2", label: "Theoretical Knowledge",
+    desc: "How confident are you in applying exercise science theory — physiology, biomechanics, psychology, and nutrition — to real coaching decisions?" },
+  { id: "k3", label: "Pedagogical Understanding",
+    desc: "How well do you understand how adults learn, and how effective are you at structuring instruction, giving feedback, and adapting your coaching style to individual athletes?" },
+  { id: "k4", label: "Coaching Environment",
+    desc: "How skilled are you at creating and managing safe, inclusive, and high-performance training environments — both physically and psychologically?" },
+  { id: "k5", label: "Business of Coaching",
+    desc: "How confident are you in the professional and operational side of coaching — client management, communication, pricing, liability, and building a sustainable coaching practice?" },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  BUILD ROWS
-// ─────────────────────────────────────────────────────────────────────────────
 function buildRows(items, containerId, isGold = false) {
   const container = document.getElementById(containerId);
   items.forEach((item, index) => {
     const row = document.createElement('div');
     row.className = `module-row${isGold ? ' gold-row' : ''}`;
 
-    // Number
     const numEl = document.createElement('div');
     numEl.className = 'row-num';
     numEl.textContent = isGold ? '★' : (index + 1);
     row.appendChild(numEl);
 
-    // Content
     const content = document.createElement('div');
     content.className = 'row-content';
 
@@ -682,7 +674,13 @@ function buildRows(items, containerId, isGold = false) {
     labelEl.textContent = item.label;
     content.appendChild(labelEl);
 
-    // Rating pills
+    if (item.desc) {
+      const descEl = document.createElement('div');
+      descEl.className = 'row-descriptor';
+      descEl.textContent = item.desc;
+      content.appendChild(descEl);
+    }
+
     const ratingGroup = document.createElement('div');
     ratingGroup.className = 'rating-group';
     for (let v = 1; v <= 10; v++) {
@@ -700,7 +698,6 @@ function buildRows(items, containerId, isGold = false) {
     content.appendChild(ratingGroup);
     row.appendChild(content);
 
-    // Notes
     const notesEl = document.createElement('div');
     notesEl.className = 'row-notes';
     const notesLabel = document.createElement('label');
@@ -719,15 +716,10 @@ function buildRows(items, containerId, isGold = false) {
 }
 
 buildRows(coreModules, 'coreModules', false);
-
 buildRows(keyAreas,   'keyAreas',    true);
 
-// Set today's date default
 document.getElementById('assessmentDate').valueAsDate = new Date();
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  COLLECT FORM DATA
-// ─────────────────────────────────────────────────────────────────────────────
 function collectData() {
   const form = document.getElementById('assessmentForm');
   const data = {
@@ -748,9 +740,6 @@ function collectData() {
   return data;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  SUBMIT — uses hidden iframe POST to bypass CORS entirely
-// ─────────────────────────────────────────────────────────────────────────────
 document.getElementById('assessmentForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -771,16 +760,12 @@ document.getElementById('assessmentForm').addEventListener('submit', function(e)
 
   const payload = collectData();
 
-  // Build a hidden form and submit it to a hidden iframe — most reliable way
-  // to POST to Google Apps Script without CORS issues
   const iframe = document.getElementById('hidden_iframe');
   const hiddenForm = document.getElementById('hidden_form');
 
-  // Clear any previous inputs
   hiddenForm.innerHTML = '';
   hiddenForm.action = APPS_SCRIPT_URL;
 
-  // Add all payload fields as hidden inputs
   Object.entries(payload).forEach(([k, v]) => {
     const input = document.createElement('input');
     input.type  = 'hidden';
@@ -789,7 +774,6 @@ document.getElementById('assessmentForm').addEventListener('submit', function(e)
     hiddenForm.appendChild(input);
   });
 
-  // Listen for iframe load = submission complete
   iframe.onload = function() {
     successMsg.style.display = 'block';
     btn.textContent = '✓ Submitted';
@@ -800,7 +784,6 @@ document.getElementById('assessmentForm').addEventListener('submit', function(e)
   hiddenForm.submit();
 });
 </script>
-<!-- Hidden iframe + form for CORS-free submission to Google Apps Script -->
 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 <form id="hidden_form" method="POST" target="hidden_iframe" style="display:none;"></form>
 </body>
