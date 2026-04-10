@@ -479,19 +479,6 @@
     color: #991b1b;
   }
 
-  .supp-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--red);
-    display: inline-block;
-    margin-right: 8px;
-    flex-shrink: 0;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
-
   .footer {
     text-align: center;
     padding: 24px;
@@ -613,7 +600,7 @@
 </div>
 
 <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_5M2Dzcaxy2bvNqj3H_zPhfhrvfYWBQM5-O5WG4vkdOG8KjLMs77pxnGkDdCpDa9Fw/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbztjjF-RBhF6LoDWBcV3_TnwYgFDNsumuuD2QM0bOksAl0sUz5bm3uSIJl9iWHqg73POw/exec";
 
 const coreModules = [
   { id: "m1",  label: "Module 1: Course Introduction",
@@ -749,42 +736,35 @@ document.getElementById('assessmentForm').addEventListener('submit', function(e)
     return;
   }
 
-  const btn = document.getElementById('submitBtn');
+  const btn        = document.getElementById('submitBtn');
   const successMsg = document.getElementById('successMsg');
   const errorMsg   = document.getElementById('errorMsg');
 
   btn.textContent = 'Submitting…';
-  btn.disabled = true;
+  btn.disabled    = true;
   successMsg.style.display = 'none';
   errorMsg.style.display   = 'none';
 
   const payload = collectData();
 
-  const iframe = document.getElementById('hidden_iframe');
-  const hiddenForm = document.getElementById('hidden_form');
-
-  hiddenForm.innerHTML = '';
-  hiddenForm.action = APPS_SCRIPT_URL;
-
-  Object.entries(payload).forEach(([k, v]) => {
-    const input = document.createElement('input');
-    input.type  = 'hidden';
-    input.name  = k;
-    input.value = v ?? '';
-    hiddenForm.appendChild(input);
-  });
-
-  iframe.onload = function() {
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode:   "no-cors",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body:   new URLSearchParams(payload).toString()
+  })
+  .then(() => {
     successMsg.style.display = 'block';
-    btn.textContent = '✓ Submitted';
-    btn.style.background = '#059669';
+    btn.textContent          = '✓ Submitted';
+    btn.style.background     = '#059669';
     successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  };
-
-  hiddenForm.submit();
+  })
+  .catch(() => {
+    errorMsg.style.display = 'block';
+    btn.textContent        = 'Submit Assessment';
+    btn.disabled           = false;
+  });
 });
 </script>
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-<form id="hidden_form" method="POST" target="hidden_iframe" style="display:none;"></form>
 </body>
 </html>
